@@ -9,7 +9,7 @@ const template = `
 	, (
 		'CARD_ID', @effectCardColor, 'CARD_NAME', 'CARD_ATTRIBUTE',
 		"CARD_EFFECT",
-		'CARD_TYPE', CARD_ATK, CARD_DEF
+		'CARD_TYPE', CARD_ATK, CARD_DEF, 'CARD_ASSOCIATION'
 	)`
 
 export const Effect = () =>
@@ -22,6 +22,7 @@ export const Effect = () =>
 	const [cardType, setCardType] = useState('CARD_TYPE')
 	const [cardAtk, setCardAtk] = useState('CARD_ATK')
 	const [cardDef, setCardDef] = useState('CARD_DEF')
+	const [cardAssociation, setCardAssociation] = useState('CARD_ASSOCIATION')
 
 
 	useEffect( () => {
@@ -32,8 +33,10 @@ export const Effect = () =>
 			.replace('CARD_EFFECT', cardEffect.replace(/"/g, '""'))
 			.replace('CARD_TYPE', cardType)
 			.replace('CARD_ATK', cardAtk)
-			.replace('CARD_DEF', cardDef))
-	}, [cardId, cardName, cardAttribute, cardEffect, cardType, cardAtk, cardDef])
+			.replace('CARD_DEF', cardDef)
+			.replace('CARD_ASSOCIATION', `Level ${cardAssociation}`))
+	}, [cardId, cardName, cardAttribute, cardEffect, cardType, cardAtk, cardDef, cardAssociation])
+
 
 	function onChange(value, setter) {
 		setter(value)
@@ -64,6 +67,7 @@ export const Effect = () =>
 				<TextField label='Card Type' onChange={ (event) => { onChange(event.target.value, setCardType) } } />
 				<TextField label='Card Atk' onChange={ (event) => { onChange(event.target.value, setCardAtk) } } />
 				<TextField label='Card Def' onChange={ (event) => { onChange(event.target.value, setCardDef) } } />
+				<TextField label='Card Association' onChange={ (event) => { onChange(event.target.value, setCardAssociation) } } />
 			</Paper>
 
 			<br /><br /><br />
