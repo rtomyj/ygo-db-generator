@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Paper, TextField, Button } from '@material-ui/core'
+import { Autocomplete } from '@material-ui/lab'
 import copy from 'copy-to-clipboard'
+
+import { attributes } from './helper/Attributes'
 
 const template = `
 	, (
@@ -34,22 +37,31 @@ export const Synchro = () =>
 			.replace('CARD_ASSOCIATION', `Level ${cardAssociation}`))
 	}, [cardId, cardName, cardAttribute, cardEffect, cardType, cardAtk, cardDef, cardAssociation])
 
-	function onChange(event, setter) {
-		setter(event.target.value)
+
+	function onChange(value, setter) {
+		setter(value)
 	}
 
 
 	return(
 		<div>
 			<Paper style = {{ padding: '20px' }} >
-				<TextField label='Card ID' onChange={ (event) => { onChange(event, setCardId) } } />
-				<TextField label='Card Name' onChange={ (event) => { onChange(event, setCardName) } } />
-				<TextField label='Card Attribute' onChange={ (event) => { onChange(event, setCardAttribute) } } />
-				<TextField rows='4' fullWidth multiline label='Card Effect' onChange={ (event) => { onChange(event, setCardEffect) } } />
-				<TextField label='Card Type' onChange={ (event) => { onChange(event, setCardType) } } />
-				<TextField label='Card Atk' onChange={ (event) => { onChange(event, setCardAtk) } } />
-				<TextField label='Card Def' onChange={ (event) => { onChange(event, setCardDef) } } />
-				<TextField label='Card Association' onChange={ (event) => { onChange(event, setCardAssociation) } } />
+				<TextField label='Card ID' onChange={ (event) => { onChange(event.target.value, setCardId) } } />
+				<TextField label='Card Name' onChange={ (event) => { onChange(event.target.value, setCardName) } } />
+				<Autocomplete
+					label='Card Attribute'
+					options={ attributes }
+					getOptionLabel={ (option) => option }
+					renderInput={ (params) => <TextField {...params} label="Card Attribute" /> }
+					autoSelect
+					autoHighlight
+					onChange={ (event, value) => { onChange(value, setCardAttribute) } }
+				/>
+				<TextField rows='4' fullWidth multiline label='Card Effect' onChange={ (event) => { onChange(event.target.value, setCardEffect) } } />
+				<TextField label='Card Type' onChange={ (event) => { onChange(event.target.value, setCardType) } } />
+				<TextField label='Card Atk' onChange={ (event) => { onChange(event.target.value, setCardAtk) } } />
+				<TextField label='Card Def' onChange={ (event) => { onChange(event.target.value, setCardDef) } } />
+				<TextField label='Card Association' onChange={ (event) => { onChange(event.target.value, setCardAssociation) } } />
 			</Paper>
 
 			<br /><br /><br />

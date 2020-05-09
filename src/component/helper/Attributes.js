@@ -1,0 +1,1 @@
+export const attributes = ['Dark', 'Light', 'Earth', 'Wind', 'Fire', 'Water']
