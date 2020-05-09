@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Select, MenuItem } from '@material-ui/core'
 
+import { Normal } from './component/Normal'
 import { Effect } from './component/Effect'
 import { Fusion } from './component/Fusion'
 import { Synchro } from './component/Synchro'
 import { Xyz } from './component/Xyz'
+import { Link } from './component/Link'
 import { Spell } from './component/Spell'
 import { Trap } from './component/Trap'
 
@@ -25,7 +27,7 @@ const view_MAPS_value = {
 }
 
 const view_MAPS_component = {
-	'normal': undefined
+	'normal': <Normal />
 	, 'effect': <Effect />
 	, 'fusion': <Fusion />
 	, 'ritual': undefined
@@ -35,7 +37,7 @@ const view_MAPS_component = {
 	, 'pendulum-effect': undefined
 	, 'pendulum-fusion': undefined
 	, 'pendulum-xyz': undefined
-	, 'link': undefined
+	, 'link': <Link />
 	, 'spell': <Spell />
 	, 'trap': <Trap />
 }
