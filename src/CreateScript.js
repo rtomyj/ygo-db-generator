@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Select, MenuItem } from '@material-ui/core'
 
 import { Effect } from './component/Effect'
+import { Fusion } from './component/Fusion'
+import { Synchro } from './component/Synchro'
+import { Xyz } from './component/Xyz'
 import { Spell } from './component/Spell'
 import { Trap } from './component/Trap'
 
@@ -24,10 +27,10 @@ const view_MAPS_value = {
 const view_MAPS_component = {
 	'normal': undefined
 	, 'effect': <Effect />
-	, 'fusion': undefined
+	, 'fusion': <Fusion />
 	, 'ritual': undefined
-	, 'synchro': undefined
-	, 'xyz': undefined
+	, 'synchro': <Synchro />
+	, 'xyz': <Xyz />
 	, 'pendulum-normal': undefined
 	, 'pendulum-effect': undefined
 	, 'pendulum-fusion': undefined

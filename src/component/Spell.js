@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Paper, TextField } from '@material-ui/core'
+import { Paper, TextField, Button } from '@material-ui/core'
+import copy from 'copy-to-clipboard'
 
 const template = `
 	, (
@@ -28,14 +29,20 @@ export const Spell = () =>
 
 
 	return(
+		<div>
 		<Paper style = {{ padding: '20px' }} >
 			<TextField label='Card ID' onChange={ (event) => { onChange(event, setCardId) } } />
 			<TextField label='Card Name' onChange={ (event) => { onChange(event, setCardName) } } />
 			<TextField rows='4' fullWidth multiline label='Card Effect' onChange={ (event) => { onChange(event, setCardEffect) } } />
+		</Paper>
 
-			<br /><br /><br />
-			<TextField rows='4' fullWidth multiline value={ modifiedTemplate } />
+		<br /><br /><br />
+
+		<Paper style = {{ padding: '20px' }} >
+			<TextField rows='6' fullWidth multiline value={ modifiedTemplate } />
+			<Button onClick={ () => copy(modifiedTemplate) } >Copy To Clipboard</Button>
 
 		</Paper>
+	</div>
 	)
 }

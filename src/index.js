@@ -1,14 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import * as serviceWorker from './serviceWorker';
 
 import { CreateScript } from './CreateScript'
 
 ReactDOM.render(
-	<React.StrictMode>
-		<CreateScript />
-	</React.StrictMode>,
+	<Router>
+		<>
+			<Switch>
+				<Route exact path='/' component={ CreateScript } >
+				</Route>
+				<Route exact path='/info'>
+					<p>Hello!!</p>
+				</Route>
+			</Switch>
+		</>
+	</Router>,
 	document.getElementById('root')
 );
 
