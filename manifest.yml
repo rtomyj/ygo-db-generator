@@ -1,0 +1,13 @@
+applications:
+- name: YGO-DB-Generator
+  buildpacks:
+  - https://github.com/cloudfoundry/staticfile-buildpack
+  disk_quota: 20M
+  instances: 1
+  memory: 64M
+  path: build/
+  routes:
+  - route: ygo-db-generator.cfapps.io
+  stack: cflinuxfs3
+  env:
+    pushstate: enabled

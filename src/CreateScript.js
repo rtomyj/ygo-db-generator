@@ -6,6 +6,7 @@ import { Effect } from './component/Effect'
 import { Fusion } from './component/Fusion'
 import { Synchro } from './component/Synchro'
 import { Xyz } from './component/Xyz'
+import { PendulumEffect } from './component/PendulumEffect'
 import { Link } from './component/Link'
 import { Spell } from './component/Spell'
 import { Trap } from './component/Trap'
@@ -34,7 +35,7 @@ const view_MAPS_component = {
 	, 'synchro': <Synchro />
 	, 'xyz': <Xyz />
 	, 'pendulum-normal': undefined
-	, 'pendulum-effect': undefined
+	, 'pendulum-effect': <PendulumEffect />
 	, 'pendulum-fusion': undefined
 	, 'pendulum-xyz': undefined
 	, 'link': <Link />
