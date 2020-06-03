@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Paper, TextField, Button } from '@material-ui/core'
 import copy from 'copy-to-clipboard'
 
+import { formatEffect } from '../helper/Formatter'
+
 const template = `
 	, (
 		'CARD_ID', @spellCardColor, 'CARD_NAME', 'Spell',
@@ -20,7 +22,7 @@ export const Spell = () =>
 		setModifiedTemplate(template
 			.replace('CARD_ID', cardId)
 			.replace('CARD_NAME', cardName)
-			.replace('CARD_EFFECT', cardEffect.replace(/"/g, '""')))
+			.replace('CARD_EFFECT', formatEffect(cardEffect)))
 	}, [cardId, cardName, cardEffect])
 
 	function onChange(event, setter) {

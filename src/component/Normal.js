@@ -3,7 +3,9 @@ import { Paper, TextField, Button } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab'
 import copy from 'copy-to-clipboard'
 
+import { formatEffect } from '../helper/Formatter'
 import { attributes } from './helper/Attributes'
+
 
 const template = `
 	, (
@@ -30,7 +32,7 @@ export const Normal = () =>
 			.replace('CARD_ID', cardId)
 			.replace('CARD_NAME', cardName)
 			.replace('CARD_ATTRIBUTE', cardAttribute)
-			.replace('CARD_LORE', cardLore.replace(/"/g, '""'))
+			.replace('CARD_LORE', formatEffect(cardLore))
 			.replace('CARD_TYPE', cardType)
 			.replace('CARD_ATK', cardAtk)
 			.replace('CARD_DEF', cardDef)
