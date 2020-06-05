@@ -3,6 +3,7 @@ import { Select, MenuItem } from '@material-ui/core'
 
 import { Normal } from './component/Normal'
 import { Effect } from './component/Effect'
+import { Ritual } from './component/Ritual'
 import { Fusion } from './component/Fusion'
 import { Synchro } from './component/Synchro'
 import { Xyz } from './component/Xyz'
@@ -31,7 +32,7 @@ const view_MAPS_component = {
 	'normal': <Normal />
 	, 'effect': <Effect />
 	, 'fusion': <Fusion />
-	, 'ritual': undefined
+	, 'ritual': <Ritual />
 	, 'synchro': <Synchro />
 	, 'xyz': <Xyz />
 	, 'pendulum-normal': undefined
