@@ -66,6 +66,13 @@ export const Fusion = () =>
 					autoHighlight
 					onChange={ (event, value) => { onChange(value, setCardAttribute) } }
 				/>
+				<TextField
+					rows='4'
+					fullWidth
+					multiline
+					label='Card Effect'
+					onChange={ (event) => { onChange(event.target.value, setCardEffect) } }
+				/>
 				<Autocomplete
 					label='Card Type'
 					options={ monsterTypes }
@@ -78,7 +85,6 @@ export const Fusion = () =>
 					freeSolo
 					onChange={ (event, value) => { onChange(value, setCardType) } }
 				/>
-				<TextField label='Card Type' onChange={ (event) => { onChange(event.target.value, setCardType) } } />
 				<TextField label='Card Atk' onChange={ (event) => { onChange(event.target.value, setCardAtk) } } />
 				<TextField label='Card Def' onChange={ (event) => { onChange(event.target.value, setCardDef) } } />
 				<TextField label='Card Association' onChange={ (event) => { onChange(event.target.value, setCardAssociation) } } />
