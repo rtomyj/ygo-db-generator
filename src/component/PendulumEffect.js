@@ -5,6 +5,7 @@ import copy from 'copy-to-clipboard'
 
 import { formatEffect } from '../helper/Formatter'
 import { attributes } from './helper/Attributes'
+import { getMonsterTypesByCardColor } from '../helper/Data'
 
 
 const template = `
@@ -27,6 +28,13 @@ export const PendulumEffect = () =>
 	const [cardLevel, setCardLevel] = useState('CARD_LEVEL')
 	const [leftScale, setLeftScale] = useState('LEFT_SCALE')
 	const [rightScale, setRightScale] = useState('RIGHT_SCALE')
+
+	const [monsterTypes, setMonsterTypes] = useState(undefined)
+
+
+	useEffect( () => {
+		getMonsterTypesByCardColor('pendulum-effect', setMonsterTypes)
+	}, [])
 
 
 	useEffect( () => {
@@ -68,7 +76,18 @@ export const PendulumEffect = () =>
 					label='Card Effect'
 					onChange={ (event) => { onChange(event.target.value, setCardEffect) } }
 				/>
-				<TextField label='Card Type' onChange={ (event) => { onChange(event.target.value, setCardType) } } />
+				<Autocomplete
+					label='Card Type'
+					options={ monsterTypes }
+					getOptionLabel={ (option) => option }
+					renderInput={ (params) => <TextField {...params} label="Monster Type" /> }
+					autoSelect
+					autoHighlight
+					autoComplete
+					disableClearable
+					freeSolo
+					onChange={ (event, value) => { onChange(value, setCardType) } }
+				/>
 				<TextField label='Card Atk' onChange={ (event) => { onChange(event.target.value, setCardAtk) } } />
 				<TextField label='Card Def' onChange={ (event) => { onChange(event.target.value, setCardDef) } } />
 				<TextField label='Card Level' onChange={ (event) => { onChange(event.target.value, setCardLevel) } } />

@@ -5,6 +5,7 @@ import copy from 'copy-to-clipboard'
 
 import { formatEffect } from '../helper/Formatter'
 import { attributes } from './helper/Attributes'
+import { getMonsterTypesByCardColor } from '../helper/Data'
 
 
 const template = `
@@ -25,6 +26,13 @@ export const Normal = () =>
 	const [cardAtk, setCardAtk] = useState('CARD_ATK')
 	const [cardDef, setCardDef] = useState('CARD_DEF')
 	const [cardAssociation, setCardAssociation] = useState('CARD_ASSOCIATION')
+
+	const [monsterTypes, setMonsterTypes] = useState(undefined)
+
+
+	useEffect( () => {
+		getMonsterTypesByCardColor('normal', setMonsterTypes)
+	}, [])
 
 
 	useEffect( () => {
@@ -66,7 +74,18 @@ export const Normal = () =>
 					label='Card Lore'
 					onChange={ (event) => { onChange(event.target.value, setCardLore) } }
 				/>
-				<TextField label='Card Type' onChange={ (event) => { onChange(event.target.value, setCardType) } } />
+				<Autocomplete
+					label='Card Type'
+					options={ monsterTypes }
+					getOptionLabel={ (option) => option }
+					renderInput={ (params) => <TextField {...params} label="Monster Type" /> }
+					autoSelect
+					autoHighlight
+					autoComplete
+					disableClearable
+					freeSolo
+					onChange={ (event, value) => { onChange(value, setCardType) } }
+				/>
 				<TextField label='Card Atk' onChange={ (event) => { onChange(event.target.value, setCardAtk) } } />
 				<TextField label='Card Def' onChange={ (event) => { onChange(event.target.value, setCardDef) } } />
 				<TextField label='Card Association' onChange={ (event) => { onChange(event.target.value, setCardAssociation) } } />
