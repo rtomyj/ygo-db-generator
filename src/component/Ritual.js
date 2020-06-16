@@ -15,7 +15,7 @@ const template = `
 		'CARD_TYPE', CARD_ATK, CARD_DEF, 'CARD_ASSOCIATION'
 	)`
 
-export const Ritual = () =>
+export const Ritual = ({cards, isFetchingCards, display}) =>
 {
 	const [modifiedTemplate, setModifiedTemplate] = useState(template)
 	const [cardId, setCardId] = useState('CARD_ID')
@@ -53,10 +53,21 @@ export const Ritual = () =>
 
 
 	return(
-		<div>
+		<div style = { (display)? undefined: {'display': 'none'} } >
 			<Paper style = {{ padding: '20px' }} >
 				<TextField label='Card ID' onChange={ (event) => { onChange(event.target.value, setCardId) } } />
-				<TextField label='Card Name' onChange={ (event) => { onChange(event.target.value, setCardName) } } />
+				<Autocomplete
+					label='Card Name'
+					options={ cards }
+					getOptionLabel={ (option) => option }
+					renderInput={ (params) => <TextField {...params} label="Card Name" /> }
+					autoSelect
+					autoHighlight
+					autoComplete
+					freeSolo
+					loading={isFetchingCards}
+					onChange={ (event, value) => { onChange(value, setCardName) } }
+				/>
 				<Autocomplete
 					label='Card Attribute'
 					options={ attributes }

@@ -11,6 +11,23 @@ const getMonsterTypesByCardColor = (cardColor, stateMethod) =>
 }
 
 
+const getAllCardsInDb = (cardContentStateMethod, isFetchingStateMethod) =>
+{
+	axios.get(`${baseUrl}/api/v1/card/search`)
+	.then(res => {
+		let cardNames = []
+
+		res.data.forEach(item => {
+			cardNames.push(item.cardName)
+		})
+		cardContentStateMethod(cardNames)
+		isFetchingStateMethod(false)
+		console.log(cardNames)
+	})
+}
+
+
 export {
 	getMonsterTypesByCardColor
+	, getAllCardsInDb
 }

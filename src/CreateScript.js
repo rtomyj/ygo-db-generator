@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Select, MenuItem } from '@material-ui/core'
+import { Select, MenuItem, Snackbar } from '@material-ui/core'
 
 import { Normal } from './component/Normal'
 import { Effect } from './component/Effect'
@@ -12,62 +12,35 @@ import { Link } from './component/Link'
 import { Spell } from './component/Spell'
 import { Trap } from './component/Trap'
 
-const view_MAPS_value = {
-	'normal': 'normal'
-	, 'effect': 'effect'
-	, 'fusion': 'fusion'
-	, 'ritual': 'ritual'
-	, 'synchro': 'synchro'
-	, 'xyz': 'xyz'
-	, 'pendulum-normal': 'pendulum-normal'
-	, 'pendulum-effect': 'pendulum-effect'
-	, 'pendulum-fusion': 'pendulum-fusion'
-	, 'pendulum-xyz': 'pendulum-xyz'
-	, 'link': 'link'
-	, 'spell': 'spell'
-	, 'trap': 'trap'
-}
+import { getAllCardsInDb } from './helper/Data'
 
-const view_MAPS_component = {
-	'normal': <Normal />
-	, 'effect': <Effect />
-	, 'fusion': <Fusion />
-	, 'ritual': <Ritual />
-	, 'synchro': <Synchro />
-	, 'xyz': <Xyz />
-	, 'pendulum-normal': undefined
-	, 'pendulum-effect': <PendulumEffect />
-	, 'pendulum-fusion': undefined
-	, 'pendulum-xyz': undefined
-	, 'link': <Link />
-	, 'spell': <Spell />
-	, 'trap': <Trap />
-}
+
+const views = [
+	'normal', 'effect', 'fusion', 'ritual', 'synchro', 'xyz', 'pendulum-normal', 'pendulum-effect', 'pendulum-fusion', 'pendulum-xyz'
+	, 'link', 'spell', 'trap'
+]
 
 export const CreateScript = () =>
 {
-	const [view, setView] = useState(view_MAPS_value['effect'])
+	const [view, setView] = useState('effect')
 	const [viewSelector, setViewSelector] = useState(undefined)
-	const [viewComponent, setViewComponent] = useState(undefined)
+	const [cardNamesInDB, setCardNamesInDB] = useState([])
+	const [isFetchingCards, setIsFetchingCards] = useState(true)
+
+	const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
 
 
 	useEffect( () => {
 		const items = []
-
-		Object.keys(view_MAPS_value).forEach( (key) => {
+		views.forEach(item => {
 			items.push(
-				<MenuItem value={view_MAPS_value[key]} >{ key }</MenuItem>
+				<MenuItem value={item} >{ item }</MenuItem>
 			)
 		})
-
 		setViewSelector(items)
+
+		getAllCardsInDb(setCardNamesInDB, setIsFetchingCards)
 	}, [])
-
-
-	useEffect( () => {
-		setViewComponent(view_MAPS_component[view])
-
-	}, [view])
 
 
 
@@ -76,11 +49,33 @@ export const CreateScript = () =>
 			labelId='card-color'
 			id='card-color-selector'
 			value={view}
-			onChange={ (event) => { setView(event.target.value) } }
+			onChange={ (event) => { setView(event.target.value); setIsSnackbarOpen(true) } }
 			>
 				{ viewSelector }
-			</Select>
+		</Select>
 
-		{ viewComponent }
+		<Normal cards = {cardNamesInDB} isFetchingCards = {isFetchingCards} display = { view === 'normal' } />
+		<Effect cards = {cardNamesInDB} isFetchingCards = {isFetchingCards} display = { view === 'effect' } />
+		<Fusion cards = {cardNamesInDB} isFetchingCards = {isFetchingCards} display = { view === 'fusion' } />
+		<Ritual cards = {cardNamesInDB} isFetchingCards = {isFetchingCards} display = { view === 'ritual' } />
+		<Synchro cards = {cardNamesInDB} isFetchingCards = {isFetchingCards} display = { view === 'synchro' } />
+		<Xyz cards = {cardNamesInDB} isFetchingCards = {isFetchingCards} display = { view === 'xyz' } />
+		<PendulumEffect cards = {cardNamesInDB} isFetchingCards = {isFetchingCards} display = { view === 'pendulum-effect' } />
+		<Link cards = {cardNamesInDB} isFetchingCards = {isFetchingCards} display = { view === 'link' } />
+		<Spell cards = {cardNamesInDB} isFetchingCards = {isFetchingCards} display = { view === 'spell' } />
+		<Trap cards = {cardNamesInDB} isFetchingCards = {isFetchingCards} display = { view === 'trap' } />
+
+		<Snackbar
+			anchorOrigin={{
+				vertical: 'top',
+				horizontal: 'center',
+			}}
+			open={isSnackbarOpen}
+			autoHideDuration={4000}
+			onClose={ (event, reason) => {
+				setIsSnackbarOpen(false)
+			} }
+			message={`Changed to ${view}`}
+		/>
 	</div>
 }

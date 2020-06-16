@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Paper, TextField, Button } from '@material-ui/core'
+import { Autocomplete } from '@material-ui/lab'
 import copy from 'copy-to-clipboard'
 
 import { formatEffect } from '../helper/Formatter'
@@ -7,11 +8,11 @@ import { formatEffect } from '../helper/Formatter'
 
 const template = `
 	, (
-		'CARD_ID', @trapCardColor, 'CARD_NAME', 'Spell',
+		'CARD_ID', @trapCardColor, 'CARD_NAME', 'Trap',
 		"CARD_EFFECT"
 	)`
 
-export const Trap = () =>
+export const Trap = ({cards, isFetchingCards, display}) =>
 {
 	const [modifiedTemplate, setModifiedTemplate] = useState(template)
 	const [cardId, setCardId] = useState('CARD_ID')
@@ -26,17 +27,29 @@ export const Trap = () =>
 			.replace('CARD_EFFECT', formatEffect(cardEffect)))
 	}, [cardId, cardName, cardEffect])
 
-	function onChange(event, setter) {
-		setter(event.target.value)
+
+	function onChange(value, setter) {
+		setter(value)
 	}
 
 
 	return(
-		<div>
+		<div style = { (display)? undefined: {'display': 'none'} } >
 			<Paper style = {{ padding: '20px' }} >
-				<TextField label='Card ID' onChange={ (event) => { onChange(event, setCardId) } } />
-				<TextField label='Card Name' onChange={ (event) => { onChange(event, setCardName) } } />
-				<TextField rows='4' fullWidth multiline label='Card Effect' onChange={ (event) => { onChange(event, setCardEffect) } } />
+				<TextField label='Card ID' onChange={ (event) => { onChange(event.target.value, setCardId) } } />
+				<Autocomplete
+					label='Card Name'
+					options={ cards }
+					getOptionLabel={ (option) => option }
+					renderInput={ (params) => <TextField {...params} label="Card Name" /> }
+					autoSelect
+					autoHighlight
+					autoComplete
+					freeSolo
+					loading={isFetchingCards}
+					onChange={ (event, value) => { onChange(value, setCardName) } }
+				/>
+				<TextField rows='4' fullWidth multiline label='Card Effect' onChange={ (event) => { onChange(event.target.value, setCardEffect) } } />
 			</Paper>
 
 			<br /><br /><br />
