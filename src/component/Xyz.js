@@ -99,7 +99,7 @@ export const Xyz = ({cards, isFetchingCards, display}) =>
 				/>
 				<TextField label='Card Atk' onChange={ (event) => { onChange(event.target.value, setCardAtk) } } />
 				<TextField label='Card Def' onChange={ (event) => { onChange(event.target.value, setCardDef) } } />
-				<TextField label='Card Association' onChange={ (event) => { onChange(event.target.value, setCardAssociation) } } />
+				<TextField label='Card Rank' onChange={ (event) => { onChange(event.target.value, setCardAssociation) } } />
 			</Paper>
 
 			<br /><br /><br />
